@@ -64,7 +64,7 @@ public class MobileTypeTest {
         mobiletype.setId("asd");
         Set<ConstraintViolation<MobileType>> violations = validator.validate(mobiletype);
         assertEquals(1, violations.size());
-        assertEquals("invalid mobile id", violations.iterator().next().getMessage());
+        assertEquals("{Id.message}", violations.iterator().next().getMessageTemplate());
     }
 
     @Test
@@ -72,7 +72,7 @@ public class MobileTypeTest {
         mobiletype.setManufacturer(null);
         Set<ConstraintViolation<MobileType>> violations = validator.validate(mobiletype);
         assertEquals(1, violations.size());
-        assertEquals("nem lehet null-érték", violations.iterator().next().getMessage());
+        assertEquals("{javax.validation.constraints.NotNull.message}", violations.iterator().next().getMessageTemplate());
     }
 
     @Test
@@ -80,8 +80,7 @@ public class MobileTypeTest {
         mobiletype.setPrice(-1);
         Set<ConstraintViolation<MobileType>> violations = validator.validate(mobiletype);
         assertEquals(1, violations.size());
-        assertEquals("nagyobb vagy egyenlő kell legyen mint 1",violations.iterator().next().getMessage());
-
+        assertEquals("{javax.validation.constraints.Min.message}",violations.iterator().next().getMessageTemplate());
     }
 
     @Test
@@ -89,7 +88,7 @@ public class MobileTypeTest {
         mobiletype.setManufacturer(Manufacturer.APPLE);
         Set<ConstraintViolation<MobileType>> violations = validator.validate(mobiletype);
         assertEquals(1, violations.size());
-        assertEquals("apple phone colors are: black or white, samsung mobile must not blue", violations.iterator().next().getMessage());
+        assertEquals("{InvalidColor.message}", violations.iterator().next().getMessageTemplate());
     }
 
     @Test
@@ -97,7 +96,7 @@ public class MobileTypeTest {
         mobiletype.setColor(Color.BLUE);
         Set<ConstraintViolation<MobileType>> violations = validator.validate(mobiletype);
         assertEquals(1, violations.size());
-        assertEquals("apple phone colors are: black or white, samsung mobile must not blue", violations.iterator().next().getMessage());
+        assertEquals("{InvalidColor.message}", violations.iterator().next().getMessageTemplate());
     }
 
     @Test
@@ -105,7 +104,7 @@ public class MobileTypeTest {
         mobiletype.setType(null);
         Set<ConstraintViolation<MobileType>> violations = validator.validate(mobiletype);
         assertEquals(1, violations.size());
-        assertEquals("invalid mobiletype", violations.iterator().next().getMessage());
+        assertEquals("{Mobiletype.message}", violations.iterator().next().getMessageTemplate());
     }
 
 }

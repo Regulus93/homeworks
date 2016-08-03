@@ -71,7 +71,7 @@ public class UserDTOTest {
         userDto.setUserName("Reg");
         Set<ConstraintViolation<UserDTO>> violations = validator.validate(userDto);
         assertEquals(1, violations.size());
-        assertEquals("username must be least six character", violations.iterator().next().getMessage());
+        assertEquals("{Username.message}", violations.iterator().next().getMessageTemplate());
     }
 
     @Test
@@ -79,7 +79,7 @@ public class UserDTOTest {
         userDto.setPassword("ReG933");
         Set<ConstraintViolation<UserDTO>> violations = validator.validate(userDto);
         assertEquals(1, violations.size());
-        assertEquals("invalid password", violations.iterator().next().getMessage());
+        assertEquals("{Password.message}", violations.iterator().next().getMessageTemplate());
     }
 
     @Test
@@ -87,7 +87,7 @@ public class UserDTOTest {
         userDto.setEmail("valami@valami");
         Set<ConstraintViolation<UserDTO>> violations = validator.validate(userDto);
         assertEquals(1, violations.size());
-        assertEquals("invalid email address", violations.iterator().next().getMessage());
+        assertEquals("{Email.message}", violations.iterator().next().getMessageTemplate());
     }
 
     @Test
@@ -95,7 +95,7 @@ public class UserDTOTest {
         userDto.setPhone("36");
         Set<ConstraintViolation<UserDTO>> violations = validator.validate(userDto);
         assertEquals(1, violations.size());
-        assertEquals("invalid phonenumber", violations.iterator().next().getMessage());
+        assertEquals("{Phone.message}", violations.iterator().next().getMessageTemplate());
     }
 
     @Test
@@ -103,7 +103,7 @@ public class UserDTOTest {
         userDto.setAddress("763, Helsinki");
         Set<ConstraintViolation<UserDTO>> violations = validator.validate(userDto);
         assertEquals(1, violations.size());
-        assertEquals("invalid address", violations.iterator().next().getMessage());
+        assertEquals("{Address.message}", violations.iterator().next().getMessageTemplate());
     }
 
     @Test
@@ -115,7 +115,7 @@ public class UserDTOTest {
 
         Set<ConstraintViolation<UserDTO>> violations = validator.validate(userDto);
         assertEquals(1, violations.size());
-        assertEquals("invalid registration date", violations.iterator().next().getMessage());
+        assertEquals("{Registration.message}", violations.iterator().next().getMessageTemplate());
     }
 
     @Test
@@ -124,7 +124,7 @@ public class UserDTOTest {
         userDto.setLastName(null);
         Set<ConstraintViolation<UserDTO>> violations = validator.validate(userDto);
         assertEquals(1, violations.size());
-        assertEquals("you should fill first and lastname or leave both empty", violations.iterator().next().getMessage());
+        assertEquals("{Name.message}", violations.iterator().next().getMessageTemplate());
     }
 
     @Test
@@ -135,7 +135,7 @@ public class UserDTOTest {
 
         Set<ConstraintViolation<UserDTO>> violations = validator.validate(userDto);
         assertEquals(1, violations.size());
-        assertEquals("registration date must be after than date of birth",violations.iterator().next().getMessage());
+        assertEquals("{Birthday.message}",violations.iterator().next().getMessageTemplate());
     }
 
     @Test
