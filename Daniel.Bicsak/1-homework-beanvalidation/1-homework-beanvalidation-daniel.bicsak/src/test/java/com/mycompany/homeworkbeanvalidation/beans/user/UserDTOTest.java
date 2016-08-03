@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mycompany.homeworkbeanvalidation.beans.user;
 
 import java.text.ParseException;
@@ -51,17 +46,8 @@ public class UserDTOTest {
 
         Date registrationDate = new Date();
         registrationDate.setTime(registrationDate.getTime() - 1000);
+        Date dateOfBirth = parsingDate("1993.12.14.");
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.M.dd.");
-        String dateInString = "1993.12.14.";
-        Date dateOfBirth;
-        try {
-            dateOfBirth = sdf.parse(dateInString);
-        } catch (ParseException ex) {
-            Logger.getLogger(UserDTOTest.class.getName()).log(Level.SEVERE, null, ex);
-            throw new IllegalArgumentException();
-        }
-        
         userDto = new UserDTO.UserDTOBuilder(
                 "Regulus",
                 "RegPass.93",
@@ -78,7 +64,6 @@ public class UserDTOTest {
 
     @After
     public void tearDown() {
-        userDto = null;
     }
 
     @Test
@@ -86,6 +71,7 @@ public class UserDTOTest {
         userDto.setUserName("Reg");
         Set<ConstraintViolation<UserDTO>> violations = validator.validate(userDto);
         assertEquals(1, violations.size());
+        assertEquals("username must be least six character", violations.iterator().next().getMessage());
     }
 
     @Test
@@ -93,12 +79,7 @@ public class UserDTOTest {
         userDto.setPassword("ReG933");
         Set<ConstraintViolation<UserDTO>> violations = validator.validate(userDto);
         assertEquals(1, violations.size());
-        userDto.setPassword("ReG.3");
-        violations = validator.validate(userDto);
-        assertEquals(1, violations.size());
-        userDto.setPassword("REG.93");
-        violations = validator.validate(userDto);
-        assertEquals(1, violations.size());
+        assertEquals("invalid password", violations.iterator().next().getMessage());
     }
 
     @Test
@@ -106,6 +87,7 @@ public class UserDTOTest {
         userDto.setEmail("valami@valami");
         Set<ConstraintViolation<UserDTO>> violations = validator.validate(userDto);
         assertEquals(1, violations.size());
+        assertEquals("invalid email address", violations.iterator().next().getMessage());
     }
 
     @Test
@@ -113,6 +95,7 @@ public class UserDTOTest {
         userDto.setPhone("36");
         Set<ConstraintViolation<UserDTO>> violations = validator.validate(userDto);
         assertEquals(1, violations.size());
+        assertEquals("invalid phonenumber", violations.iterator().next().getMessage());
     }
 
     @Test
@@ -120,6 +103,7 @@ public class UserDTOTest {
         userDto.setAddress("763, Helsinki");
         Set<ConstraintViolation<UserDTO>> violations = validator.validate(userDto);
         assertEquals(1, violations.size());
+        assertEquals("invalid address", violations.iterator().next().getMessage());
     }
 
     @Test
@@ -131,32 +115,27 @@ public class UserDTOTest {
 
         Set<ConstraintViolation<UserDTO>> violations = validator.validate(userDto);
         assertEquals(1, violations.size());
+        assertEquals("invalid registration date", violations.iterator().next().getMessage());
     }
 
     @Test
     public void shouldViolateUserDTONameValidation() {
         userDto.setFirstName("Dani");
-        userDto.setLastName("");
+        userDto.setLastName(null);
         Set<ConstraintViolation<UserDTO>> violations = validator.validate(userDto);
         assertEquals(1, violations.size());
+        assertEquals("you should fill first and lastname or leave both empty", violations.iterator().next().getMessage());
     }
 
     @Test
     public void shouldViolateUserDTOBirthdayValidation() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.M.dd.");
-        String dateInString = "2017.07.23.";
-        Date dateOfBirth;
 
-        try {
-            dateOfBirth = sdf.parse(dateInString);
-        } catch (ParseException ex) {
-            Logger.getLogger(UserDTOTest.class.getName()).log(Level.SEVERE, null, ex);
-            throw new IllegalArgumentException();
-        }
+        Date dateOfBirth = parsingDate("2017.07.23.");
         userDto.setDateOfBirth(dateOfBirth);
 
         Set<ConstraintViolation<UserDTO>> violations = validator.validate(userDto);
         assertEquals(1, violations.size());
+        assertEquals("registration date must be after than date of birth",violations.iterator().next().getMessage());
     }
 
     @Test
@@ -171,16 +150,7 @@ public class UserDTOTest {
 
     @Test
     public void shouldNotViolateUserDTOBirthdayValidation() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.M.dd.");
-        String dateInString = "2016.07.21.";
-        Date dateOfBirth;
-
-        try {
-            dateOfBirth = sdf.parse(dateInString);
-        } catch (ParseException ex) {
-            Logger.getLogger(UserDTOTest.class.getName()).log(Level.SEVERE, null, ex);
-            throw new IllegalArgumentException();
-        }
+        Date dateOfBirth = parsingDate("2016.07.21.");
         userDto.setDateOfBirth(dateOfBirth);
 
         Set<ConstraintViolation<UserDTO>> violations = validator.validate(userDto);
@@ -191,5 +161,18 @@ public class UserDTOTest {
     public void shouldNotViolateWholeUserValidation() {
         Set<ConstraintViolation<UserDTO>> violations = validator.validate(userDto);
         assertEquals(0, violations.size());
+    }
+    
+    public Date parsingDate(String stringDate){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.M.dd.");
+        Date returnDate;
+
+        try {
+            returnDate = sdf.parse(stringDate);
+        } catch (ParseException ex) {
+            Logger.getLogger(UserDTOTest.class.getName()).log(Level.SEVERE, null, ex);
+            throw new IllegalArgumentException();
+        }
+        return returnDate;
     }
 }

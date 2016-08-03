@@ -1,37 +1,37 @@
 package com.mycompany.homeworkbeanvalidation.beans.user;
 
-import com.mycompany.homeworkbeanvalidation.constraint.user.annotations.Address;
-import com.mycompany.homeworkbeanvalidation.constraint.user.annotations.Birthday;
-import com.mycompany.homeworkbeanvalidation.constraint.user.annotations.Email;
-import com.mycompany.homeworkbeanvalidation.constraint.user.annotations.Name;
-import com.mycompany.homeworkbeanvalidation.constraint.user.annotations.Password;
-import com.mycompany.homeworkbeanvalidation.constraint.user.annotations.Phone;
-import com.mycompany.homeworkbeanvalidation.constraint.user.annotations.Registration;
-import com.mycompany.homeworkbeanvalidation.constraint.user.annotations.Username;
 import java.util.Date;
+import com.mycompany.homeworkbeanvalidation.constraint.user.annotations.RegistrationLaterThanBirthday;
+import com.mycompany.homeworkbeanvalidation.constraint.user.annotations.ValidateRegistrationDate;
+import com.mycompany.homeworkbeanvalidation.constraint.user.annotations.ValidatePhone;
+import com.mycompany.homeworkbeanvalidation.constraint.user.annotations.ValidatePassword;
+import com.mycompany.homeworkbeanvalidation.constraint.user.annotations.ValidateName;
+import com.mycompany.homeworkbeanvalidation.constraint.user.annotations.ValidateEmail;
+import com.mycompany.homeworkbeanvalidation.constraint.user.annotations.ValidateAddress;
+import com.mycompany.homeworkbeanvalidation.constraint.user.annotations.ValidateUsername;
 
 /**
  *
  * @author Bicsak Daniel
  */
-@Birthday
-@Name
+@RegistrationLaterThanBirthday
+@ValidateName
 public class UserDTO {
-
-    @Username
+    
+    @ValidateUsername
     private String userName;
-    @Password
+    @ValidatePassword
     private String password;
     private String firstName;
     private String lastName;
-    @Address
+    @ValidateAddress
     private String address;
-    @Phone
+    @ValidatePhone
     private String phone;
-    @Email
+    @ValidateEmail
     private String email;
     private Sex sex;
-    @Registration
+    @ValidateRegistrationDate
     private Date registrationDate;
     private Date dateOfBirth;
     private boolean admin;

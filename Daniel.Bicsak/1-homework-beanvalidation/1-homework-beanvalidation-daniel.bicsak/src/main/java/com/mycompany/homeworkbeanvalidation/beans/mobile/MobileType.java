@@ -1,23 +1,23 @@
 package com.mycompany.homeworkbeanvalidation.beans.mobile;
 
-import com.mycompany.homeworkbeanvalidation.constraint.mobile.annotations.AppleColor;
-import com.mycompany.homeworkbeanvalidation.constraint.mobile.annotations.Id;
-import com.mycompany.homeworkbeanvalidation.constraint.mobile.annotations.Type;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import com.mycompany.homeworkbeanvalidation.constraint.mobile.annotations.ColorByManufacturer;
+import com.mycompany.homeworkbeanvalidation.constraint.mobile.annotations.ValidateTypeOfMobile;
+import com.mycompany.homeworkbeanvalidation.constraint.mobile.annotations.ValidateMobileId;
 
 /**
  *
  * @author Bicsak Daniel
  */
-@AppleColor
+@ColorByManufacturer
 public class MobileType {
 
-    @Id
+    @ValidateMobileId
     private String id;
     @NotNull
     private Manufacturer manufacturer;
-    @Type
+    @ValidateTypeOfMobile
     private String type;
     @NotNull
     @Min(1)

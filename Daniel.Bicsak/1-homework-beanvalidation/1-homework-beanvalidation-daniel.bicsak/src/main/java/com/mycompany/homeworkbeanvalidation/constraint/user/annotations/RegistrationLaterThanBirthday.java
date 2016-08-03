@@ -7,6 +7,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
+import javax.validation.ReportAsSingleViolation;
 
 /**
  *
@@ -14,8 +15,9 @@ import javax.validation.Payload;
  */
 @Constraint(validatedBy = BirthdayValidator.class)
 @Target({TYPE})
+@ReportAsSingleViolation
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Birthday {
+public @interface RegistrationLaterThanBirthday {
 
     String message() default "{Birthday.message}";
 
