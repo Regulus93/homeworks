@@ -5,6 +5,7 @@ import javax.validation.constraints.NotNull;
 import com.mycompany.homeworkbeanvalidation.constraint.mobile.annotations.ColorByManufacturer;
 import com.mycompany.homeworkbeanvalidation.constraint.mobile.annotations.ValidateTypeOfMobile;
 import com.mycompany.homeworkbeanvalidation.constraint.mobile.annotations.ValidateMobileId;
+import java.util.UUID;
 
 /**
  *
@@ -27,6 +28,10 @@ public class MobileType {
     @NotNull
     private Color color;
 
+    public MobileType() {
+        //Empty constructor for the ObjectionMapper.
+    }
+    
     private MobileType(MobileTypeBuilder builder) {
         this.id = builder.id;
         this.manufacturer = builder.manufacturer;
@@ -93,8 +98,8 @@ public class MobileType {
         private Currency currency;
         private Color color;
 
-        public MobileTypeBuilder(String id, Manufacturer manufacturer, String type, Color color) {
-            this.id = id;
+        public MobileTypeBuilder(Manufacturer manufacturer, String type, Color color) {
+            this.id = UUID.randomUUID().toString();
             this.manufacturer = manufacturer;
             this.type = type;
             this.color = color;

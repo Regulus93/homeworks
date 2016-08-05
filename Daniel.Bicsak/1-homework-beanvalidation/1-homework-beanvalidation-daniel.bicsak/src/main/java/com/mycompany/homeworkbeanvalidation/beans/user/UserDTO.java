@@ -36,6 +36,10 @@ public class UserDTO {
     private Date dateOfBirth;
     private boolean admin;
 
+    public UserDTO() {
+        //Empty constructor for the ObjectionMapper.
+    }
+    
     private UserDTO(UserDTOBuilder builder) {
         this.userName = builder.userName;
         this.password = builder.password;

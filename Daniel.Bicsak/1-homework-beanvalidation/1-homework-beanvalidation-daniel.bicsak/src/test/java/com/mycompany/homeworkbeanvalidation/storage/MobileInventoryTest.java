@@ -34,7 +34,6 @@ public class MobileInventoryTest {
     @Before
     public void setUp() {
         mobiletype1 = new MobileType.MobileTypeBuilder(
-                UUID.randomUUID().toString(),
                 Manufacturer.SAMSUNG,
                 "iP4",
                 Color.PURPLE)

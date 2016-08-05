@@ -34,7 +34,6 @@ public class MobileInventory {
         }
 
         mt.setId(UUID.randomUUID().toString());
-
         inventory.put(mt, 0);
 
         return mt;
