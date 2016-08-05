@@ -5,7 +5,6 @@ import com.mycompany.homeworkbeanvalidation.exceptions.storage.mobileinventory.P
 import com.mycompany.homeworkbeanvalidation.exceptions.storage.mobileinventory.PhoneIsntStoragedException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 import org.jboss.logging.Logger;
 
 /**
@@ -16,52 +15,52 @@ public class MobileInventory {
 
     private static final Logger LOGGER = Logger.getLogger(MobileInventory.class);
 
-    private Map<MobileType, Integer> inventory;
+    private final Map<MobileType, Integer> inventory;
 
     public MobileInventory() {
         this.inventory = new HashMap<>();
     }
 
-    public Map<MobileType, Integer> getInventory() {
-        return inventory;
+    public int getInventorySize() {
+        return inventory.size();
     }
 
     public MobileType addNewMobileType(MobileType mt) {
 
         if (inventory.containsKey(mt)) {
             LOGGER.log(Logger.Level.ERROR, "Mobiletype (" + mt.getType() + ") is already in inventory.");
-            throw new PhoneIsStoragedException("Mobiletype (" + mt.getType() + ") is already in inventory.");
+            throw new PhoneIsStoragedException(mt.getType());
         }
 
-        mt.setId(UUID.randomUUID().toString());
         inventory.put(mt, 0);
 
         return mt;
     }
 
     public boolean reserveMobile(MobileType mt, int amount) {
-
-        for (Map.Entry<MobileType, Integer> entry : inventory.entrySet()) {
-            if (entry.getKey().equals(mt) && amount <= entry.getValue()) {
-                entry.setValue(entry.getValue() - amount);
-                return true;
-            }
+        if (!inventory.containsKey(mt)) {
+            LOGGER.log(Logger.Level.ERROR, "Reserve error: mobiltype ("
+                    + mt.getType() + ") is not storaged.");
+            throw new PhoneIsntStoragedException(mt.getType());
         }
 
-        return false;
+        if (inventory.get(mt) >= amount) {
+            inventory.put(mt, inventory.get(mt) - amount);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public boolean returnMobile(MobileType mt, int amount) {
-        for (Map.Entry<MobileType, Integer> entry : inventory.entrySet()) {
-            if (entry.getKey().equals(mt)) {
-                entry.setValue(amount);
-                return true;
-            }
-        }
-        
-        LOGGER.log(Logger.Level.ERROR, "Returned mobiltype (" + mt.getType() + ") is not storaged.");
 
-        throw new PhoneIsntStoragedException("Returned mobiltype (" + mt.getType() + ") is not storaged.");
+        if (inventory.containsKey(mt)) {
+            inventory.put(mt, inventory.get(mt) + amount);
+            return true;
+        }
+
+        LOGGER.log(Logger.Level.ERROR, "Returned mobiltype (" + mt.getType() + ") is not storaged.");
+        throw new PhoneIsntStoragedException(mt.getType());
     }
 
 }

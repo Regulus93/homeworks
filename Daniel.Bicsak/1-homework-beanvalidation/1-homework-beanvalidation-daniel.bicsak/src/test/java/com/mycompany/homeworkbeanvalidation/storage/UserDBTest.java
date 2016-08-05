@@ -8,10 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -20,57 +17,40 @@ import static org.junit.Assert.*;
  * @author Regulus
  */
 public class UserDBTest {
-    
+
     private UserDTO user1;
     private UserDTO user2;
-    
-    public UserDBTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
+
     @Before
     public void setUp() {
-        
+
         Date registrationDate = new Date();
         registrationDate.setTime(registrationDate.getTime() - 1000);
         Date dateOfBirth1 = parsingDate("1993.12.14.");
-        
+
         user1 = new UserDTO.UserDTOBuilder(
                 "User1",
                 "1234",
                 "8900, Zalaegerszeg",
                 "+36300001212",
-                "valami@valami.hu",
-                registrationDate)
+                "valami@valami.hu")
                 .setAdmin(true)
                 .setDateOfBirth(dateOfBirth1).
                 setFirstName("Dani").
                 setLastName("Bicsak").
                 setSex(Sex.MALE).build();
-        
+
         user2 = new UserDTO.UserDTOBuilder(
                 "User3",
                 "1234",
                 "8900, Zalaegerszeg",
                 "+36300001212",
-                "valami@valami.hu",
-                registrationDate)
+                "valami@valami.hu")
                 .setAdmin(true)
                 .setDateOfBirth(dateOfBirth1).
                 setFirstName("Dani").
                 setLastName("Kovacs").
                 setSex(Sex.MALE).build();
-    }
-    
-    @After
-    public void tearDown() {
     }
 
     /**
@@ -78,17 +58,15 @@ public class UserDBTest {
      */
     @Test
     public void testRegistrate() {
-        System.out.println("registrate");
-        
         UserDB udb = new UserDB();
-        
-        udb.registrate(user2);
-        
+
+        UserDTO registratedUser = udb.registrate(user2);
+
         Date d = new Date();
-        d.setTime(d.getTime());
-        
-        assertEquals(true,udb.getUsers().contains(user2));
-        assertEquals(d,udb.getUser("User3").getRegistrationDate());
+        d.setTime(d.getTime()-1000);
+
+        assertEquals(user2, registratedUser);
+        assertEquals(d, udb.getUser("User3").getRegistrationDate());
     }
 
     /**
@@ -96,7 +74,6 @@ public class UserDBTest {
      */
     @Test
     public void testGetUser() {
-        System.out.println("getUser");
         UserDB instance = new UserDB();
         UserDTO expResult = instance.registrate(user1);
         UserDTO result = instance.getUser("User1");
@@ -108,28 +85,27 @@ public class UserDBTest {
      */
     @Test
     public void testAuthenticate() {
-        System.out.println("authenticate");
-        
+
         String username1 = "User1";
         String password1 = "1234";
         boolean expResult1 = true;
-        
+
         String username2 = "User3";
         String password2 = "464556";
         boolean expResult2 = false;
-        
+
         UserDB instance = new UserDB();
         instance.registrate(user1);
         instance.registrate(user2);
-        
+
         boolean result1 = instance.authenticate(username1, password1);
         boolean result2 = instance.authenticate(username2, password2);
-        
+
         assertEquals(expResult1, result1);
         assertEquals(expResult2, result2);
     }
-    
-    public Date parsingDate(String stringDate){
+
+    public Date parsingDate(String stringDate) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy.M.dd.");
         Date returnDate;
 
@@ -141,5 +117,5 @@ public class UserDBTest {
         }
         return returnDate;
     }
-    
+
 }

@@ -6,8 +6,8 @@ package com.mycompany.homeworkbeanvalidation.exceptions.storage.mobileinventory;
  */
 public class PhoneIsntStoragedException extends RuntimeException {
 
-    public PhoneIsntStoragedException(String message) {
-        super(message);
+    public PhoneIsntStoragedException(String mobiletype) {
+        super("Mobiletype (" + mobiletype + ") is already in inventory.");
     }
 
 }

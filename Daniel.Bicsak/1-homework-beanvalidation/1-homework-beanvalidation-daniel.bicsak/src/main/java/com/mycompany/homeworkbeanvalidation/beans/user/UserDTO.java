@@ -17,7 +17,7 @@ import com.mycompany.homeworkbeanvalidation.constraint.user.annotations.Validate
 @RegistrationLaterThanBirthday
 @ValidateName
 public class UserDTO {
-    
+
     @ValidateUsername
     private String userName;
     @ValidatePassword
@@ -39,7 +39,7 @@ public class UserDTO {
     public UserDTO() {
         //Empty constructor for the ObjectionMapper.
     }
-    
+
     private UserDTO(UserDTOBuilder builder) {
         this.userName = builder.userName;
         this.password = builder.password;
@@ -157,13 +157,14 @@ public class UserDTO {
         private boolean admin;
 
         public UserDTOBuilder(String userName, String password, String address,
-                String phone, String email, Date registrationDate) {
+            String phone, String email) {
             this.userName = userName;
             this.password = password;
             this.address = address;
             this.phone = phone;
             this.email = email;
-            this.registrationDate = registrationDate;
+            this.registrationDate = new Date();
+            registrationDate.setTime(registrationDate.getTime() - 1000);
         }
 
         public UserDTOBuilder setFirstName(String firstName) {

@@ -44,8 +44,6 @@ public class UserDTOTest {
     @Before
     public void setUp() {
 
-        Date registrationDate = new Date();
-        registrationDate.setTime(registrationDate.getTime() - 1000);
         Date dateOfBirth = parsingDate("1993.12.14.");
 
         userDto = new UserDTO.UserDTOBuilder(
@@ -53,8 +51,7 @@ public class UserDTOTest {
                 "RegPass.93",
                 "8900, Zalaegerszeg",
                 "+36300001212",
-                "valami@valami.hu",
-                registrationDate)
+                "valami@valami.hu")
                 .setAdmin(true)
                 .setDateOfBirth(dateOfBirth).
                 setFirstName("Dani").
