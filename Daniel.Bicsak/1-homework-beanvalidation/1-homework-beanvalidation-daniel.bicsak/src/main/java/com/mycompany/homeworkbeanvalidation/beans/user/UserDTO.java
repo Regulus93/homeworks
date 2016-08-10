@@ -1,5 +1,6 @@
 package com.mycompany.homeworkbeanvalidation.beans.user;
 
+import com.mycompany.homeworkbeanvalidation.annotations.ValidateBean;
 import java.util.Date;
 import com.mycompany.homeworkbeanvalidation.constraint.user.annotations.RegistrationLaterThanBirthday;
 import com.mycompany.homeworkbeanvalidation.constraint.user.annotations.ValidateRegistrationDate;
@@ -14,6 +15,7 @@ import com.mycompany.homeworkbeanvalidation.constraint.user.annotations.Validate
  *
  * @author Bicsak Daniel
  */
+@ValidateBean
 @RegistrationLaterThanBirthday
 @ValidateName
 public class UserDTO {

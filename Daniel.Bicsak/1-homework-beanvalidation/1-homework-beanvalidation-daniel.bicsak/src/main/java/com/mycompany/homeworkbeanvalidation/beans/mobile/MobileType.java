@@ -1,5 +1,6 @@
 package com.mycompany.homeworkbeanvalidation.beans.mobile;
 
+import com.mycompany.homeworkbeanvalidation.annotations.ValidateBean;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import com.mycompany.homeworkbeanvalidation.constraint.mobile.annotations.ColorByManufacturer;
@@ -11,6 +12,7 @@ import java.util.UUID;
  *
  * @author Bicsak Daniel
  */
+@ValidateBean
 @ColorByManufacturer
 public class MobileType {
 
