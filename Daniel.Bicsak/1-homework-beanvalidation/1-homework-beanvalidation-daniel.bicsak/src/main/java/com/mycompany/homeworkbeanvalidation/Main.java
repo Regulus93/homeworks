@@ -34,16 +34,19 @@ public final class Main {
 
         UserDB userDb = new UserDB();
         MobileInventory mobileInventory = new MobileInventory();
-
+        
+        LOGGER.log(Logger.Level.INFO, "Uploading entities from JSON: ");
         try {
             m.createEntities(userDb, mobileInventory);
         } catch (IOException ex) {
             java.util.logging.Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
+        LOGGER.log(Logger.Level.INFO, "Trying interceptor: ");
         m.tryInterceptor();
-
-        m.tryCart(mobileInventory, userDb);
+        
+        LOGGER.log(Logger.Level.INFO, "Trying cart: ");
+        Main.tryCart(mobileInventory);
     }
 
     private void createEntities(UserDB userDb, MobileInventory mobileInventory) throws IOException {
@@ -111,7 +114,7 @@ public final class Main {
 
     }
 
-    private void tryCart(MobileInventory mobileInv, UserDB userDb) {
+    private static void tryCart(MobileInventory mobileInv) {
         Cart cart = new Cart(mobileInv);
 
         MobileType mobiletype = new MobileType.MobileTypeBuilder(
@@ -128,6 +131,7 @@ public final class Main {
         cart.addPhone(mobiletype, 2);
         cart.removePhone(mobiletype, 1);
         int valueOfCart = cart.getSumValue();
+        LOGGER.log(Logger.Level.INFO, "Cart worth: " + valueOfCart);
         cart.purchase();
 
     }

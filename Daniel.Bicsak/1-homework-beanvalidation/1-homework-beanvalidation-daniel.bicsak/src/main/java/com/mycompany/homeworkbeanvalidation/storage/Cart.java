@@ -13,34 +13,34 @@ import java.util.logging.Level;
 public class Cart {
 
     private final MobileInventory inventory;
-    private Map<MobileType, Integer> cart;
+    private Map<MobileType, Integer> content;
 
     public Cart(MobileInventory inventory) {
         this.inventory = inventory;
-        cart = new HashMap<>();
+        content = new HashMap<>();
     }
 
     public void addPhone(MobileType mobileType, int amount) {
         inventory.reserveMobile(mobileType, amount);
-        cart.put(mobileType, amount);
+        content.put(mobileType, amount);
     }
 
     public void removePhone(MobileType mobileType, int amount) {
         inventory.returnMobile(mobileType, amount);
-        cart.replace(mobileType, cart.get(mobileType) - amount);
+        content.replace(mobileType, content.get(mobileType) - amount);
     }
 
     public void erase() {
-        cart.entrySet().stream().forEach((entry) -> {
+        for (Map.Entry<MobileType, Integer> entry : content.entrySet()) {
             inventory.returnMobile(entry.getKey(), entry.getValue());
-        });
-        cart.clear();
+        }
+        content.clear();
     }
 
     public int getSumValue() {
         int value = 0;
 
-        for (Map.Entry<MobileType, Integer> entry : cart.entrySet()) {
+        for (Map.Entry<MobileType, Integer> entry : content.entrySet()) {
             value += (entry.getKey().getPrice() * (entry.getValue()));
         }
 
@@ -48,7 +48,7 @@ public class Cart {
     }
 
     public void purchase() {
-        for (Map.Entry<MobileType, Integer> entry : cart.entrySet()) {
+        for (Map.Entry<MobileType, Integer> entry : content.entrySet()) {
             Logger.getLogger(Cart.class.getName()).log(Level.INFO,
                     entry.getValue() + " pieces from mobiletype: "
                     + entry.getKey().getManufacturer().name() + " "
@@ -57,7 +57,7 @@ public class Cart {
                     + entry.getKey().getPrice() + " "
                     + entry.getKey().getCurrency() + " / pieces");
         }
-        cart.clear();
+        content.clear();
     }
 
 }
