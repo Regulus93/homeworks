@@ -1,4 +1,4 @@
-package com.mycompany.homeworkbeanvalidation.interceptor;
+package com.mycompany.homeworkbeanvalidation.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -13,6 +13,6 @@ import javax.interceptor.InterceptorBinding;
 @InterceptorBinding
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ValidatorInterceptorBinding {
+public @interface ValidatorInterceptor {
 
 }

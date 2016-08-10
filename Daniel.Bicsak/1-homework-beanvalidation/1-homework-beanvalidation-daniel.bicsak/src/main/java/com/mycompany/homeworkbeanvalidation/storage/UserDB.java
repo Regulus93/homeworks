@@ -1,5 +1,6 @@
 package com.mycompany.homeworkbeanvalidation.storage;
 
+import com.mycompany.homeworkbeanvalidation.annotations.ValidatorInterceptor;
 import com.mycompany.homeworkbeanvalidation.beans.user.UserDTO;
 import com.mycompany.homeworkbeanvalidation.exceptions.storage.userdb.NoSuchUserException;
 import com.mycompany.homeworkbeanvalidation.exceptions.storage.userdb.UsernameIsReservedException;
@@ -11,6 +12,7 @@ import org.jboss.logging.Logger;
  *
  * @author Bicsak Daniel
  */
+@ValidatorInterceptor
 public class UserDB {
 
     private static final Logger LOGGER = Logger.getLogger(UserDB.class);

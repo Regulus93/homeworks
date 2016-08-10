@@ -1,6 +1,5 @@
 package com.mycompany.homeworkbeanvalidation.producer;
 
-import com.mycompany.homeworkbeanvalidation.annotations.ValidateBeanQualifier;
 import javax.enterprise.inject.Produces;
 import javax.validation.Validation;
 import javax.validation.Validator;
@@ -12,8 +11,8 @@ import javax.validation.ValidatorFactory;
  */
 public class ValidatorProducer {
 
-    @Produces @ValidateBeanQualifier
-    public Validator produceLogger() {
+    @Produces
+    public Validator produceValidator() {
         ValidatorFactory vf = Validation.buildDefaultValidatorFactory();
         return vf.getValidator();
     }

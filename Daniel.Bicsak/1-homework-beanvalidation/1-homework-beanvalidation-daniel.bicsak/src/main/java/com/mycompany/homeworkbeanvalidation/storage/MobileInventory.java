@@ -1,5 +1,6 @@
 package com.mycompany.homeworkbeanvalidation.storage;
 
+import com.mycompany.homeworkbeanvalidation.annotations.ValidatorInterceptor;
 import com.mycompany.homeworkbeanvalidation.beans.mobile.MobileType;
 import com.mycompany.homeworkbeanvalidation.exceptions.storage.mobileinventory.PhoneIsStoragedException;
 import com.mycompany.homeworkbeanvalidation.exceptions.storage.mobileinventory.PhoneIsntStoragedException;
@@ -11,6 +12,7 @@ import org.jboss.logging.Logger;
  *
  * @author Bicsak Daniel
  */
+@ValidatorInterceptor
 public class MobileInventory {
 
     private static final Logger LOGGER = Logger.getLogger(MobileInventory.class);
