@@ -26,14 +26,14 @@ public class BeanValidatorInterceptor {
     private Validator validator;
     
     @AroundInvoke
-    public Object enterMethod(InvocationContext ic){
+    public Object enterMethod(InvocationContext ic) throws Exception {
         validateParameters(ic.getParameters());
         try {
             return ic.proceed();
         } catch (Exception ex) {
             Logger.getLogger(BeanValidatorInterceptor.class.getName()).log(Level.SEVERE, null, ex);
+            throw ex;
         }
-        return null;
     }
 
     private void validateParameters(Object[] parameters) {
